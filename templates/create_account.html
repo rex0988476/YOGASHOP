@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <meta charset="UTF-8">
+    </meta>
+    <meta name="decription" content="content為網站搜尋結果的描述欄位" />
+    <meta name="author" content="rex09_" />
+    <meta name="keywords" content="rex09_, html, 筆記" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--根據裝置等比例縮放頁面大小 ,初始為100%-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+
+    <!--meta只要中間沒東西都能省略為<meta/>-->
+
+    <title>創建帳號-YOGASHOP</title>
+    <!--網頁(書籤頁)標題-->
+    <style>
+        .regist {
+            color: green;
+        }
+
+        .warn {
+            color: red;
+        }
+    </style>
+    <style>
+        .flex {
+            display: flex;
+            height: max-content;
+            flex-wrap: wrap;
+            margin-left: 25%;
+            margin-top: 5%;
+        }
+
+        .item_category {
+            width: 70%;
+            height: auto;
+
+            margin-bottom: 5px;
+
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5dc;
+        }
+    </style>
+    <style>
+        .modal-content {
+            background-color: #f5f5dc;
+        }
+
+        .moder-header {
+            font-size: 32px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .new_goods {
+            margin-right: auto;
+            margin-left: auto;
+            font-size: 20px;
+        }
+
+        .btn-close {
+            float: right;
+        }
+
+        .from-group {
+            margin: 10px;
+            border-radius: 20px;
+        }
+
+        .btn-info {
+            width: 49%;
+            color: white;
+        }
+
+        .send_button {
+            border: solid 2px;
+        }
+
+        .moder-header {
+            font-size: 16px;
+        }
+
+        .login {
+            float: right;
+        }
+
+        .back {
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex">
+
+        <div class="item_category">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="moder-header">
+                    <h3 class="add_new_good">
+                        創建帳號
+                    </h3>
+                </div>
+                <!--Body-->
+                <!--輸入商品資料-->
+
+                <form action="/register" method="post" enctype=multipart/form-data>
+                    <div class="from-group">
+                        <input type="text" name="ID" class="ID form-control" id="ID" value="" required placeholder="帳號"
+                            pattern="[A-Za-z\d]{6,}" title="必須包含 6 個或更多字符(最多20個字符)">
+                        {% if stat_id == "repeat" %}
+                        <span class="warn">帳號已被使用</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- <div class="from-group">
+                            <input type="text" name="goods_author" class="goods_author form-control" id="goods_author"
+                                value="" required placeholder="作者名稱(20字以內)" pattern="^.{1,20}$">
+                        </div> -->
+
+                    <div class="from-group">
+                        <input type="password" name="password" class="password form-control" id="password" value=""
+                            required placeholder="密碼" pattern="(?=.*\d)(?=.*[a-z]).{8,20}"
+                            title="必須包含 8 個或更多字符(最多20個字符)，這些字符至少是一個數字和一個小寫字母">
+                    </div>
+
+                    <div class="from-group">
+                        <input type="password" name="passwordcheck" class="passwordcheck form-control"
+                            id="passwordcheck" onkeyup="validate()" value="" required placeholder="確認密碼"
+                            pattern="(?=.*\d)(?=.*[a-z]).{8,20}" title="必須包含 8 個或更多字符(最多20個字符)，這些字符至少是一個數字和一個小寫字母">
+                        <div id="tishi"></div>
+                    </div>
+
+                    <div class="from-group">
+                        <input type="text" name="name" class="name form-control" id="name" value="" required
+                            placeholder="暱稱" pattern=".{1,6}">
+                    </div>
+
+
+                    <div class="from-group">
+                        <input type="file" name="picture" class="picture form-control" id="picture" value="" required
+                            placeholder="頭像" accept=".jpg,.png">
+                    </div>
+
+
+                    <div class="from-group">
+                        <input type="text" name="phone_number" class="phone_number form-control" id="phone_number"
+                            value="" required placeholder="電話號碼" pattern="(?=.*\d).{10}" title="剛好10個數字">
+                    </div>
+
+
+                    <div class="from-group">
+                        <input type="text" name="bank_account" class="bank_account form-control" id="bank_account"
+                            value="" placeholder="銀行帳戶" pattern="(?=.*\d).{8,20}">
+                        {% if stat_bank == "repeat" %}
+                        <span class="warn">銀行帳戶已被使用</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="from-group">
+                        <input type="text" name="credit_card" class="credit_card form-control" id="credit_card" value=""
+                            placeholder="信用卡帳號" pattern="(?=.*\d).{12,20}">
+                        {% if stat_card == "repeat" %}
+                        <span class="warn">信用卡已被使用</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="from-group">
+                        <button id="submit" class="btn-info">送出</button>
+                        <input type="reset" class="btn-info" value="Reset">
+                    </div>
+                    {% if stat_id == "" and stat_bank == "" and stat_card == "" %}
+                    <p class="regist">註冊成功!</p>
+                    {% endif %}
+                </form>
+                <script>
+                    function validate() {
+                        var pw1 = document.getElementById("password").value;
+                        var pw2 = document.getElementById("passwordcheck").value;
+                        if (pw1 == pw2) {
+                            document.getElementById("tishi").innerHTML = "<font color='green'>兩次密碼相同</font>";
+                            document.getElementById("submit").disabled = false;
+                        }
+                        else {
+                            document.getElementById("tishi").innerHTML = "<font color='red'>兩次密碼不相同</font>";
+                            document.getElementById("submit").disabled = true;
+                        }
+                    }
+                </script>
+
+                <!--Footer-->
+                <div class="moder-footer">
+
+                    <div class="signup">
+                        <a href="/" class="back">
+                            回到首頁
+                        </a>
+                        <a href="login.html" type="button" class="login">
+                            回到登入介面
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+<!---->

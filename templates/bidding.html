@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <meta charset="UTF-8">
+    </meta>
+    <meta name="decription" content="content為網站搜尋結果的描述欄位" />
+    <meta name="author" content="rex09_" />
+    <meta name="keywords" content="rex09_, html, 筆記" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--根據裝置等比例縮放頁面大小 ,初始為100%-->
+
+
+    <!--meta只要中間沒東西都能省略為<meta/>-->
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.ico') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+    <title>競標-YOGASHOP</title>
+    <!--網頁(書籤頁)標題-->
+
+
+
+    <style>
+        .carousel-inner>.carousel-item>img,
+        .carousel-inner>.carousel-item>a>img {
+            width: 200px;
+            margin: auto;
+        }
+
+        .carousel {
+            margin: auto;
+            width: 50%;
+            background-color: lightgray;
+        }
+
+        .nav-link {
+            font-size: 20px;
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+            align-items: center;
+            margin-left: 2px;
+        }
+
+        .btn {
+            color: white;
+            background-color: #198754;
+            align-items: center;
+            font-size: 17px;
+        }
+
+        .username {
+            color: white;
+        }
+
+        .nav {
+            height: auto;
+        }
+
+        .navbar {
+            background-color: blue;
+        }
+
+        .navbar-toggler {
+            background-color: lightgray;
+        }
+
+        @media(wax-width:600px) {
+            nav {
+                height: auto;
+            }
+
+            .nav-link {
+                padding: 10px;
+            }
+        }
+    </style>
+    <!-- 跳出視窗 -->
+    <style>
+        .check_pay {
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .btn_end {
+            width: 100%;
+        }
+
+        .btn-close {
+            float: right;
+        }
+
+        .from-group {
+            margin: 20px;
+            border-radius: 20px;
+            word-wrap: break-word;
+        }
+
+        .btn-info {
+            color: white;
+        }
+
+        .modal-content {
+            font-size: 16px;
+        }
+    </style>
+    <!-- 競標flex -->
+    <style>
+        .flex {
+            display: flex;
+            height: max-content;
+            flex-wrap: wrap;
+            margin-left: 25%;
+        }
+
+        .item_bidding {
+            width: 70%;
+            height: 180px;
+
+            margin-top: 5px;
+
+            display: flex;
+            flex-flow: row;
+            color: black;
+        }
+
+        .item_bidding_left {
+            width: 25%;
+            height: 100%;
+
+            flex-wrap: wrap;
+            word-wrap: break-word;
+            word-break: normal;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5dc;
+        }
+
+        .item_bidding_mid {
+            width: 40%;
+            height: 100%;
+
+            flex-wrap: wrap;
+            word-wrap: break-word;
+            word-break: normal;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: start;
+            align-items: center;
+            background-color: #f5f5dc;
+        }
+
+        .item_bidding_mid_top {
+            width: 100%;
+            height: 60%;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: end;
+            align-items: center;
+        }
+
+        .item_bidding_mid_foot {
+            width: 100%;
+            height: 40%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .item_bidding_right {
+            width: 35%;
+            height: 100%;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5dc;
+        }
+
+        .item_bidding_right_top {
+            width: 100%;
+            height: 60%;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: end;
+            align-items: center;
+        }
+
+        .item_bidding_right_foot {
+            width: 100%;
+            height: 40%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <!-- 不顯示 -->
+    <style>
+        .no_goods {
+            display: flex;
+            margin-top: 3px;
+        }
+
+        .box {
+            height: max-content;
+            flex: 1;
+            flex-grow: 0;
+            flex-shrink: 0;
+            border-left: 3px solid white;
+        }
+
+        .flex_left {
+            flex-grow: 1;
+        }
+
+        .flex_middel {
+            flex-grow: 3;
+            font-size: 21px;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .flex_right {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+    {% if IS_LOGIN != "1" %}
+    <script>alert("請先進行登入");</script>
+    <meta http-equiv="refresh" content="0;URL=login.html">
+    {% else %}
+    {% if no_bank_account == "1" %}
+    <script>alert("請先設定銀行帳號");</script>
+    <meta http-equiv="refresh" content="0;URL=account.html">
+    {% endif %}
+    {% if bid_fail == "1" %}
+    <script>alert("喊價失敗，請輸入比目前高5%的金額");</script>
+    {% endif %}
+    {% endif %}
+    <!--最上層橫列-->
+    <!--navbar-expand-lg展示導覽列連結 
+        navbar-light 變更顏色-->
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <!--container-fluid版面過窄會壓縮起來-->
+        <div class="container-fluid">
+            <!--品牌logo-->
+            <a class="navbar-brand" href="/"> YOGASHOP</a>
+
+            <!--第一部分：手機板-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon">
+                </span>
+            </button>
+            <!--第二部分：電腦版-->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <!--列出內容-->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="seller.html">我的賣場</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shopping_cart.html">購物車</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="delivery_service.html">商品物流</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="customer_service.html">客服</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="bidding.html">競標</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="QA.html">常見問題</a>
+                    </li>
+                </ul>
+            </div>
+
+            <ul class="navbar-right">
+                <form action="/search_result.html" method="post" class="d-flex form-inline">
+                    <!--me-2搜尋按鈕跟搜尋框的距離-->
+                    <input class="form-control me-2" type="search" placeholder="search" name="search_text" required>
+                    <button class="btn" type="submit">search</button>
+                </form>
+            </ul>
+            <!--jinja2的判斷式做登入&暱稱表示-->
+            {% if IS_LOGIN == "1" %}
+            <ul class="navbar-right">
+                <div class="dropdown">
+                    <a class="nav-link" href="account.html">
+                        <img src={{USER_AVATAR_SRC}} width="40">
+                        <span class="username">{{USER_NAME}}</span>
+                    </a>
+                </div>
+            </ul>
+            {% else %}
+            <ul class="navbar-right">
+                <div class="dropdown">
+                    <a class="btn" href="login.html" role="button">
+                        登入
+                    </a>
+                </div>
+            </ul>
+            {% endif %}
+
+
+
+        </div>
+    </nav>
+    {% if no_goods == "1" %}
+    <div class="no_goods">
+        <div class="flex_left box">
+        </div>
+        <div class="flex_middel box">
+            <h1>目前沒有活動</h1>
+        </div>
+        <div class="flex_right box">
+        </div>
+    </div>
+    {% else %}
+    <div class="flex">
+        {% for bid in bidding %}
+        <div class="item_bidding">
+            <div class="item_bidding_left">
+                <img src="{{bid.goods_picture}}" width="160px" height="160px">
+            </div>
+
+            <div class="item_bidding_mid">
+                <div class="item_bidding_mid_top">
+                    <span>品名：{{bid.goods_name}}</span>
+                    <span>開始日期：{{bid.start_date}}</span>
+                    <span>結束日期：{{bid.end_date}}</span>
+                </div>
+                {% if bid.bid_status == "2" and bid.max_member_id == USER_ID%}
+                <div class="item_bidding_mid_foot">
+                    <!--按鈕-->
+                    <button data-bs-toggle="modal" data-bs-target="#set_goods" class="btn-info">去結帳</button>
+                    <!--跳出視窗內容-->
+                    <div class="modal fade" id="set_goods">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="moder-header">
+                                    <h3 class="add_new_good">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </h3>
+                                </div>
+                                <!--Body-->
+                                <!--輸入商品資料-->
+                                <span class="check_pay">確認付款方式</span>
+                                <div class="moder-body">
+                                    <form action="/pay?bid={{bid.bid_id}}" method="post" enctype=multipart/form-data>
+                                        <div class="from-group">
+                                            <select id="COD_or_Ccard" name="COD_or_Ccard" required>
+                                                <option value="">請選擇付款方式：</option>
+                                                <option value="Ccard">信用卡付款</option>
+                                                <option value="COD">貨到付款</option>
+                                            </select>
+                                        </div>
+                                        <!--送出按鈕-->
+                                        <div class="from-group">
+                                            <button id="submit" class="btn-info btn_end">送出</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--Footer-->
+                                <div class="moder-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="item_bidding_right">
+                {% if bid.bid_status == "1" and bid.max_member_id != USER_ID%}
+                <div class="item_bidding_right_top">
+                    <span>目前最高價：{{bid.max_price}}$</span>
+                    <span>出價者：{{bid.max_member_id}}</span>
+                </div>
+                <div class="item_bidding_right_foot">
+                    <form action="/bidding.html?bid={{bid.bid_id}}&sta=1" method="post" enctype=multipart/form-data>
+                        <input type="text" name="money" value="" class="" pattern="^[0-9]*$"
+                            placeholder="輸入金額請超過{{bid.pre_text}}">
+                        <button id="submit" class="btn-info">送出</button>
+                    </form>
+                </div>
+                {% else %}
+                <div class="item_bidding_right_top">
+                    <span>目前最高價：{{bid.max_price}}$</span>
+                    <span>出價者：{{bid.max_member_id}}</span>
+                </div>
+                <div class="item_bidding_right_foot"></div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+
+</html>
+<!---->

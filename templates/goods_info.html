@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <meta charset="UTF-8">
+    </meta>
+    <meta name="decription" content="content為網站搜尋結果的描述欄位" />
+    <meta name="author" content="rex09_" />
+    <meta name="keywords" content="rex09_, html, 筆記" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--根據裝置等比例縮放頁面大小 ,初始為100%-->
+
+
+    <!--meta只要中間沒東西都能省略為<meta/>-->
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.ico') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+    <title>商品詳細資訊-YOGASHOP</title>
+    <!--網頁(書籤頁)標題-->
+
+    <style>
+        .carousel-inner>.carousel-item>img,
+        .carousel-inner>.carousel-item>a>img {
+            width: 200px;
+            margin: auto;
+        }
+
+        .carousel {
+            margin: auto;
+            width: 50%;
+            background-color: lightgray;
+        }
+
+        .nav-link {
+            font-size: 20px;
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+            align-items: center;
+            margin-left: 2px;
+        }
+
+        .btn {
+            color: white;
+            background-color: #198754;
+            align-items: center;
+            font-size: 17px;
+        }
+
+        .username {
+            color: white;
+        }
+
+        .nav {
+            height: auto;
+        }
+
+        .navbar {
+            background-color: blue;
+        }
+
+        .navbar-toggler {
+            background-color: lightgray;
+        }
+
+        @media(wax-width:600px) {
+            nav {
+                height: auto;
+            }
+
+            .nav-link {
+                padding: 10px;
+            }
+        }
+    </style>
+    <!-- 跳出視窗 -->
+    <style>
+        .check_delete {
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .btn_delete {
+            width: 100%;
+        }
+
+        .btn_set {
+            width: 49%;
+        }
+
+        .btn-close {
+            float: right;
+        }
+
+        .from-group {
+            margin: 20px;
+            border-radius: 20px;
+            word-wrap: break-word;
+        }
+
+        .btn-info {
+            color: white;
+        }
+
+        .enter {
+            position: relative;
+        }
+
+        .button {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            color: black;
+        }
+
+        .moder-header {
+            font-size: 16px;
+        }
+
+        .border {
+            border: solid 2px #f5f5dc;
+        }
+    </style>
+    <style>
+        .flex {
+            display: flex;
+            height: max-content;
+            padding: 15px;
+            background-color: white;
+            flex-wrap: wrap;
+        }
+
+        .item_left {
+            flex: 0 0 21%;
+            height: 600px;
+            background-color: #f5f5dc;
+            margin-left: 20%;
+            margin-top: 1%;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            color: black;
+        }
+
+        .item_left_top {
+            width: 100%;
+            height: 80%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+        }
+
+        .item_left_foot {
+            width: 100%;
+            height: 20%;
+
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .item_left_foot_1 {
+            width: 33%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item_left_foot_2 {
+            width: 34%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item_left_foot_3 {
+            width: 33%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item_right {
+            flex: 0 0 38%;
+            height: 600px;
+            margin: 1%;
+            background-color: #f5f5dc;
+            display: flex;
+            flex-flow: column;
+            color: black;
+        }
+
+        .item_right_1 {
+            width: 100%;
+            height: 20%;
+
+            border-bottom: 2px solid black;
+            display: flex;
+            flex-flow: column;
+        }
+
+        .item_right_1_name {
+            width: 100%;
+            height: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font-size: 2rem;
+        }
+
+        .item_right_1_date {
+            width: 100%;
+            height: 30%;
+            display: flex;
+            justify-content: end;
+            align-items: flex-end;
+            font-size: 20px;
+        }
+
+        .item_right_2 {
+            width: 100%;
+            height: 15%;
+
+            display: flex;
+            flex-flow: column;
+            flex-wrap: wrap;
+            word-wrap: break-word;
+            word-break: normal;
+
+            justify-content: start;
+            align-items: center;
+            font-size: 21px;
+            border-bottom: 2px solid black;
+        }
+
+        .item_right_3 {
+            width: 100%;
+            height: 10%;
+
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+            align-items: center;
+            font-size: 21px;
+            border-bottom: 2px solid black;
+        }
+
+        .item_right_3_left {
+            width: 50%;
+            height: 10%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item_right_3_right {
+            width: 100%;
+            height: 10%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item_right_4 {
+            width: 100%;
+            height: 25%;
+
+            display: flex;
+            justify-content: start;
+            font-size: 21px;
+            border-bottom: 2px solid black;
+        }
+
+        .item_right_5 {
+            width: 100%;
+            height: 10%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 2px solid black;
+        }
+
+        .item_right_5_left {
+            width: 50%;
+            height: 10%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            color: red;
+        }
+
+        .item_right_5_right {
+            width: 100%;
+            height: 10%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+        }
+
+        .item_right_5_right>.star {
+            font-size: 25px;
+            text-align: right;
+            color: gold;
+        }
+
+        .item_right_6 {
+            width: 100%;
+            height: 20%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 21px;
+        }
+
+        .item_foot {
+            flex: 0 0 60%;
+            height: 200px;
+            margin-left: 20%;
+            margin-bottom: 5px;
+
+            display: flex;
+            flex-flow: row;
+            background-color: #f5f5dc;
+            color: black;
+        }
+
+        .item_foot_1 {
+            width: 20%;
+            height: 100%;
+
+            border: 2px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item_foot_2 {
+            width: 15%;
+            height: 100%;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+
+        }
+
+        .item_foot_2_top {
+            width: 100%;
+            height: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font-size: 25px;
+        }
+
+        .item_foot_2_foot {
+            width: 100%;
+            height: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+        }
+
+        .item_foot_3 {
+            width: 15%;
+            height: 100%;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+
+        }
+
+        .item_foot_3_top {
+            width: 100%;
+            height: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font-size: 25px;
+        }
+
+        .item_foot_3_foot {
+            width: 100%;
+            height: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+        }
+
+        .item_foot_4 {
+            width: 50%;
+            height: 100%;
+
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .item_foot_4_top {
+            width: 100%;
+            height: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .item_foot_4_foot {
+            width: 100%;
+            height: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item_foot_5 {
+            flex: 0 0 60%;
+            height: 200px;
+            margin-left: 20%;
+            margin-bottom: 5px;
+
+            background-color: #f5f5dc;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            color: black;
+        }
+
+        .item_foot_left {
+            width: 20%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 21px;
+        }
+
+        .item_foot_right {
+            width: 80%;
+            height: 100%;
+
+            display: flex;
+            justify-content: start;
+            font-size: 21px;
+        }
+    </style>
+</head>
+
+<body>
+    {% if overflow == "1" %}
+    <script>alert("商品剩餘數量不足");</script>
+    {% endif %}
+    {% if selected == "1" %}
+    <script>alert("商品已在購物車");</script>
+    {% endif %}
+    {% if num_error == "1" %}
+    <script>alert("加入購物車數量需大於0");</script>
+    {% endif %}
+    <!--最上層橫列-->
+    <!--navbar-expand-lg展示導覽列連結 
+        navbar-light 變更顏色-->
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <!--container-fluid版面過窄會壓縮起來-->
+        <div class="container-fluid">
+            <!--品牌logo-->
+            <a class="navbar-brand" href="/"> YOGASHOP</a>
+
+            <!--第一部分：手機板-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon">
+                </span>
+            </button>
+            <!--第二部分：電腦版-->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <!--列出內容-->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="seller.html">我的賣場</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shopping_cart.html">購物車</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="delivery_service.html">商品物流</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="customer_service.html">客服</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bidding.html">競標</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="QA.html">常見問題</a>
+                    </li>
+                </ul>
+            </div>
+
+            <ul class="navbar-right">
+                <form action="/search_result.html" method="post" class="d-flex form-inline">
+                    <!--me-2搜尋按鈕跟搜尋框的距離-->
+                    <input class="form-control me-2" type="search" placeholder="search" name="search_text" required>
+                    <button class="btn" type="submit">search</button>
+                </form>
+            </ul>
+            <!--jinja2的判斷式做登入&暱稱表示-->
+            {% if IS_LOGIN == "1" %}
+            <ul class="navbar-right">
+                <div class="dropdown">
+                    <a class="nav-link" href="account.html">
+                        <img src={{USER_AVATAR_SRC}} width="40">
+                        <span class="username">{{USER_NAME}}</span>
+                    </a>
+                </div>
+            </ul>
+            {% else %}
+            <ul class="navbar-right">
+                <div class="dropdown">
+                    <a class="btn" href="login.html" role="button">
+                        登入
+                    </a>
+                </div>
+            </ul>
+            {% endif %}
+
+
+
+        </div>
+    </nav>
+    <div class="flex">
+        <div class="item_left">
+            <div class="item_left_top">
+                {% if goods.goods_picture != "" %}
+                <img src={{goods.goods_picture}} width="400px" height="400px" class="border">
+                {% else %}
+                <img src=https://cdn.discordapp.com/attachments/948939020090609696/976846136428101642/kdAYGNU-0000_2.jpg
+                    width="400px" height="400px">
+                {% endif %}
+            </div>
+            <div class="item_left_foot">
+                {% if USER_ID == seller.seller_id %}
+                {% if is_stop_supply != "1" %}
+                <form action="/stop_supply?gid={{goods.goods_id}}&sta=1" method="post" enctype=multipart/form-data>
+                    <input type="submit" value="暫停供貨">
+                </form>
+                {% else %}
+                <div class="item_left_foot_1">
+                    <form action="/stop_supply?gid={{goods.goods_id}}&sta=0" method="post" enctype=multipart/form-data>
+                        <input type="submit" value="重啟供貨">
+                    </form>
+                </div>
+                <div class="item_left_foot_2">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#delete">刪除商品</button>
+                    <!--跳出視窗內容-->
+                    <div class="modal fade" id="delete">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="moder-header">
+                                    <h3>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </h3>
+                                </div>
+                                <!--Body-->
+                                <!--輸入商品資料-->
+                                <span class="check_delete">是否確認要刪除！！</span>
+                                <form action="/delete_goods?gid={{goods.goods_id}}" method="post"
+                                    enctype=multipart/form-data>
+                                    <!--送出按鈕-->
+                                    <div class="from-group">
+                                        <button id="submit" class="btn-info btn_delete">確認刪除</button>
+                                    </div>
+                                </form>
+
+                                <!--Footer-->
+                                <div class="moder-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item_left_foot_3">
+                    <!--按鈕-->
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#set_goods">修改商品</button>
+                    <!--跳出視窗內容-->
+                    <div class="modal fade" id="set_goods">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="moder-header">
+                                    <h3 class="add_new_good">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </h3>
+                                </div>
+                                <!--Body-->
+                                <!--輸入商品資料-->
+                                <span class="check_delete">修改商品</span>
+                                <div class="moder-header">
+                                    <form action="/set_goods?gid={{goods.goods_id}}" method="post"
+                                        enctype=multipart/form-data>
+                                        <div class="from-group">
+                                            價格：
+                                            <input type="text" name="goods_price" class="goods_price form-control"
+                                                id="goods_price" value="{{goods.goods_price}}" required
+                                                placeholder="商品價格" pattern="^[0-9]*$">
+                                        </div>
+                                        <div class="from-group">
+                                            數量：
+                                            <input type="text" name="goods_quantity" class="goods_quantity form-control"
+                                                id="goods_quantity" value="{{goods.goods_quantity}}" required
+                                                placeholder="商品數量" pattern="^[0-9]*$">
+                                        </div>
+                                        <div class="from-group">
+                                            <label>商品是否願意參與競標：</label>
+                                            <input type="radio" name="can_bid" value="0" checked>否
+                                            <input type="radio" name="can_bid" value="1">是
+                                        </div>
+                                        <div class="from-group">
+                                            <select id="new_or_old" name="new_or_old">
+                                                <option value="">商品新舊程度：</option>
+                                                <option value="全新">全新</option>
+                                                <option value="9成新">9成新</option>
+                                                <option value="5成新">5成新</option>
+                                                <option value="3成新">3成新</option>
+                                            </select>
+                                        </div>
+                                        <!--送出按鈕-->
+                                        <div class="from-group">
+                                            <button id="submit" class="btn-info btn_set">送出</button>
+                                            <input type="reset" class="btn-info btn_set" value="Reset">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--Footer-->
+                                <div class="moder-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="item_right">
+            <div class="item_right_1">
+                <span class="item_right_1_name">
+                    {{goods.goods_name}}
+                </span>
+                <dspan class="item_right_1_date">
+                    上假日期：{{goods.goods_dates}}
+                </dspan>
+            </div>
+
+            <div class="item_right_2">
+                {% for key,value in goods.items() %}
+                {% if key == "categories" %}
+                <span><b>商品分類：</b>
+                    {% for category in value %}
+                    {{category}}
+                    {% if category != goods.last_category%}
+                    ，
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}</span>
+            </div>
+            <div class="item_right_3">
+                <div class="item_right_3_left">
+                    <span><b>作者：</b>{{goods.goods_author}}</span>
+                </div>
+                {% if goods.goods_id[0] == "1" %}
+                <div class="item_right_3_right">
+                    <span><b>出版社：</b>{{goods.goods_book_publisher}}</span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="item_right_4">
+                <spanp><b> 簡介：</b>{{goods.goods_describe}}</spanp>
+            </div>
+            <div class="item_right_5">
+                <div class="item_right_5_left">
+                    <span>${{goods.goods_price}}</span>
+                </div>
+                <div class="item_right_5_right">
+                    {% if goods.goods_rate != -1.0 %}
+                    <span>{{goods.goods_rate}}</span>
+                    <spnn class="star">★</spnn>
+                    {% else %}
+                    <span>沒有評價</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="item_right_6">
+                <form action="/add_to_shopping_cart?gid={{goods.goods_id}}" method="post" enctype=multipart/form-data>
+                    {% if USER_ID != seller.seller_id %}
+                    <label>商品數量：</label>
+                    <input type="text" name="goods_amount" value="1" required pattern="^[0-9]*$">
+                    <button id="submit">加入購物車</button>
+                    {% endif %}
+                    <label>商品剩餘數量：{{goods.goods_quantity}}</label>
+                </form>
+            </div>
+        </div>
+        <div class="item_foot">
+
+            <span class="item_foot_1">
+                <a href="/seller.html?id={{seller.seller_id}}">
+                    <img src={{seller.seller_avatar}} width="196px" height="196px">
+                </a>
+            </span>
+            <span class="item_foot_2">
+                <div class="item_foot_2_top">{{seller.seller_name}}</div>
+                <div class="item_foot_2_foot">
+                    <form action="/seller.html?id={{seller.seller_id}}" method="post" enctype=multipart/form-data>
+                        <input type="submit" value="查看賣場">
+                    </form>
+                </div>
+            </span>
+
+            <span class="item_foot_3">
+                <div class="item_foot_3_top">
+                    {% if seller.seller_id != USER_ID %}
+                    <form action="/chat.html?cid={{seller.seller_id}}&type=1" method="post" enctype=multipart/form-data>
+                        <input type="submit" value="聊聊">
+                    </form>
+                    {% endif %}
+                </div>
+                <div class="item_foot_3_foot">
+                    {% if can_report == "1" %}
+                    <!--按鈕-->
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#report">檢舉</button>
+
+                    <!--跳出視窗內容-->
+                    <div class="modal fade" id="report">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="moder-header">
+                                    <h3 class="add_report">檢舉敘述
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </h3>
+                                </div>
+                                <!--Body-->
+                                <!--輸入商品資料-->
+                                <div class="moder-header">
+                                    <form
+                                        action="/report?gid={{goods.goods_id}}&mid={{USER_ID}}&sid={{seller.seller_id}}"
+                                        method="post" enctype=multipart/form-data>
+                                        <div class="from-group">
+                                            <textarea cols="40" rows="4" name="report_text" id="report_text" required
+                                                placeholder="輸入檢舉訊息" maxlength="100"
+                                                class="report_text form-control"></textarea>
+                                        </div>
+                                        <!--送出按鈕-->
+                                        <div class="from-group">
+                                            <button id="submit" class="btn-info">送出</button>
+                                            <input type="reset" class="btn-info" value="Reset">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--Footer-->
+                                <div class="moder-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+
+            </span>
+            <span class="item_foot_4">
+                <div class="item_foot_4_top"></div>
+                <div class="item_foot_4_foot">
+                    <form action="/update_star_rate?gid={{goods.goods_id}}" method="post" enctype=multipart/form-data>
+                        {% if can_star_rate == "1" %}
+                        <label>商品評價：</label>
+                        <input type="text" name="goods_star_rate" value="" required title="請輸入0~5其中一個整數"
+                            placeholder="請輸入0~5其中一個整數" pattern="^[0-5]*$">
+                        <button id="submit">送出</button>
+                        {% endif %}
+                    </form>
+                </div>
+            </span>
+        </div>
+        {% if can_rate == "1" %}
+        <div class="item_foot_5">
+            <form action="/add_text_rate?gid={{goods.goods_id}}" method="post" enctype=multipart/form-data>
+                <div class="from-group">
+                    <textarea cols="140" rows="4" name="goods_text_rate" id="goods_text_rate" required
+                        placeholder="輸入評價訊息" maxlength="100" class="goods_text_rate form-control"
+                        style="resize:none;"></textarea>
+                </div>
+                <!--送出按鈕-->
+                <div class="enter">
+                    <button id="submit" class="button">送出</button>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+        {% for card in rates %}
+        <div class="item_foot">
+            <div class="item_foot_left">
+                {{card.member_id}}
+            </div>
+            <div class="item_foot_right">
+                評價：{{card.text }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
+<!---->
