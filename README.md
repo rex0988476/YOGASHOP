@@ -5,8 +5,10 @@
 ## Info   
 - 線上書局系統    
 - 結合Python, flask, MySQL, HTML, CSS及JavaScript
-- [ppt連結](https://docs.google.com/presentation/d/1z8cRDSAjev_R3cW_f0es0Ff_jYzwWhX9/edit?usp=sharing&ouid=109216764574140767254&rtpof=true&sd=true)
-- [word連結]
+- 系統說明
+  - [ppt](https://drive.google.com/file/d/134vyo94iCzNGgRgIoCFg8TulhvYrMink/view?usp=sharing)
+  - [word](https://drive.google.com/file/d/1mpaMg2Vy9h_nwQFYJdrDakBaQatqTpX7/view?usp=sharing)
+
 ## Usage
 0.下載檔案    
 1.安裝MySQL    
