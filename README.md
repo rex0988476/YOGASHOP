@@ -2,10 +2,11 @@
 
 ![demo](https://github.com/rex0988476/YOGASHOP/blob/main/README/demo.png)
 
-## INFO    
-線上書局系統    
-結合Python, flask, MySQL, HTML, CSS及JavaScript
-
+## Info   
+- 線上書局系統    
+- 結合Python, flask, MySQL, HTML, CSS及JavaScript
+- ppt連結
+- word連結
 ## Usage
 0.下載檔案    
 1.安裝MySQL    
